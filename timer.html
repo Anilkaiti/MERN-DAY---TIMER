@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+    <style>
+        body{
+            min-height:100vh ;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .outer{
+            height: 220px;
+            background-color: rgba(0, 255, 255,0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: top;
+            align-items: center;
+        }
+        h2{
+            margin-top: 50px;
+            color: rgb(238, 11, 158);
+            margin-bottom: 10px;
+        }
+        p{
+            font-weight: 550;
+            margin-bottom: 25px;
+        }
+        button{
+            font-size: 10px;
+            font-weight: bold;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        button:hover{
+            opacity: 0.9;
+        }
+        #bt1{
+            background-color: rgb(212, 80, 168);
+        }
+        #bt2{
+            background-color: red;
+        }
+        #bt3{
+            background-color:rgb(248, 202, 147);
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+        <h2>TIMER</h2>
+        <p id="js-timer">25:00</p>
+        <div class="inner1">
+            <button id="bt1" onclick="setTimer()">START</button>
+            <button id="bt2" onclick="stop()">STOP</button>
+            <button id="bt3" onclick="reset()">RESET</button>
+        </div>
+    </div>
+
+    <script>
+        let totalTime = 25*60;
+        let remainingTime = totalTime;
+        let intervalId = null;
+
+        function displayTime(){
+            let minutes = Math.floor(remainingTime/60);
+            let seconds = remainingTime%60;
+            document.getElementById('js-timer').textContent = `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+        }
+
+        function setTimer(){
+            if (intervalId !== null) return;
+
+            intervalId = setInterval( () =>{
+                if(remainingTime<=0){
+                    clearInterval(intervalId);
+                    intervalId = null;
+                    alert('Your time is up!');
+                }
+
+                else{
+                    remainingTime--;
+                    displayTime();
+                }
+            },1000);
+        }
+
+        function stop(){
+            clearInterval(intervalId);
+            intervalId = null;
+            // displayTime();
+        }
+
+        function reset(){
+            clearInterval(intervalId);
+            intervalId = null;
+            remainingTime = totalTime;
+            displayTime();
+        }
+
+    </script>
+
+</body></html>
